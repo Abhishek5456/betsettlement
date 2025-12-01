@@ -1,0 +1,41 @@
+services:
+  # --- Kafka (KRaft mode, no Zookeeper) ---
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    container_name: kafka
+    ports:
+      - "9092:9092"    # Kafka broker
+      - "9093:9093"    # Controller listener
+    environment:
+      KAFKA_PROCESS_ROLES: "broker,controller"
+      KAFKA_NODE_ID: 1
+      KAFKA_CONTROLLER_QUORUM_VOTERS: "1@localhost:9093"
+      KAFKA_LISTENERS: "PLAINTEXT://:9092,CONTROLLER://:9093"
+      KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://localhost:9092"
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT"
+      KAFKA_CONTROLLER_LISTENER_NAMES: "CONTROLLER"
+      KAFKA_NUM_PARTITIONS: 1
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "false"
+
+  # --- RocketMQ NameServer ---
+  rmq-namesrv:
+    image: apache/rocketmq:latest
+    container_name: rmq-namesrv
+    ports:
+      - "9876:9876"
+    command: sh mqnamesrv
+
+  # --- RocketMQ Broker ---
+  rmq-broker:
+    image: apache/rocketmq:latest
+    container_name: rmq-broker
+    depends_on:
+      - rmq-namesrv
+    ports:
+      - "10911:10911"  # broker TCP
+      - "10909:10909"  # broker HTTP
+      - "10912:10912"  # optional for internal use
+    environment:
+      NAMESRV_ADDR: rmq-namesrv:9876
+    command: sh mqbroker
