@@ -1,6 +1,5 @@
 package com.sprotygroup.betsettlement.kafka;
 
-import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.RecordMetadata;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
@@ -10,7 +9,6 @@ import java.util.concurrent.CompletableFuture;
 
 import static java.util.Objects.requireNonNull;
 
-@Slf4j
 @Component
 public class KafkaProducer<V> {
 

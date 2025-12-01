@@ -1,6 +1,5 @@
 package com.sprotygroup.betsettlement.rocketmq;
 
-import com.sprotygroup.betsettlement.kafka.EventOutcomeKafkaConsumer;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
