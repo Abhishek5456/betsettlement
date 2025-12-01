@@ -15,4 +15,8 @@ The application has docker-compose.yml file
 5. Create RocketMQ topic - `docker exec -it rmq-broker sh mqadmin updateTopic -t bet-settlements -c DefaultCluster -n rmq-namesrv:9876`
 6. Run the application from `BetSettlementApplication` class
 
+## Callouts
+1. kafka producer and consumer are working fine
+2. RocketMQ configuration seems correct but while producing the message to RocketMQ topic, I am facing sendDefaultTimeout exception
+
 
